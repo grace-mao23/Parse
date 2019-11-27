@@ -4,22 +4,20 @@
 #include <unistd.h>
 
 char ** parse_args( char * line ) {
-  char ** args;
+  char ** args = malloc(5 * sizeof(char *));
   int i = 0;
-  char *part = strsep( &line, " ");
-  while (part != NULL) {
-    args[i] = part;
+  while (line != NULL) {
+    args[i] = strsep(&line, " ");
     i++;
-    part = strsep( &line, " ");
+    //part = strsep( &line, " ");
   }
-
   return args;
 }
 
 int main() {
   char line[100] = "ls -l -a";
-  char *s1 = line;
-  char ** args = parse_args(s1);
+  printf("Parsing: %s\n", line);
+  char ** args = parse_args(line);
   execvp(args[0], args);
 
   // Sample Code
